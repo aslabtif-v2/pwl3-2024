@@ -41,11 +41,6 @@
                         <x-input-error class="mt-2" :messages="$errors->get('')" />
                     </div>
 
-                    <div class="max-w-xl">
-                        <x-input-label for="" value="Jumlah Buku"/>
-                        <x-text-input id="quantity" type="number" name="" class="mt-1 block w-full" value="{{ old('')}}" required/>
-                        <x-input-error class="mt-2" :messages="$errors->get('')" />
-                    </div>
 
                     <div class="max-w-xl">
                         <x-input-label for="" value="Kategori Rak Buku"/>
