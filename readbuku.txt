@@ -21,7 +21,6 @@
                         <th>Penerbit</th>
                         <th>Kota</th>
                         <th>Cover</th>
-                        <th>Kuantitas</th>
                         <th>Kode Rak</th>
                     </tr>
                 </x-slot>
@@ -42,7 +41,6 @@
                                 <span class="text-gray-400">No image</span>
                             @endif
                         </td>
-                        <td>{{ $book->quantity }}</td>
                         <td>{{ $book->bookshelf->code }}-{{ $book->bookshelf->name }}</td>
                     </tr>
                 @endforeach
