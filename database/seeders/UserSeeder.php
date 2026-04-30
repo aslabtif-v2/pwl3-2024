@@ -2,16 +2,10 @@
 
 namespace Database\Seeders;
 
-use DB;
-use Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB as FacadesDB;
-use Illuminate\Support\Facades\Hash as FacadesHash;
-
-// use Illuminate\Support\Facades\Hash;
-// use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -20,27 +14,26 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('id_ID');
 
-        for($i = 1; $i<5; $i++){
-            $npm = $faker->unique()->numerify('5520######');
-        FacadesDB::table('users')->insert([
-                    'username' => $faker->username(),
-                    'first_name' => $faker->firstName(),
-                    'last_name' => $faker->lastName(),
-                    'npm' => $npm,
-                    'email' => $faker->unique()->safeEmail(),
-                    'password' => FacadesHash::make('password')
-                ]);
+        Role::create(['name' => 'pustakawan']);
+        Role::create(['name' => 'mahasiswa']);
 
-        }
+        User::create([
+            'npm' => 001,
+            'username' => 'pustakawan',
+            'first_name' => 'pustakawan',
+            'last_name' => 'unsur',
+            'email' => 'pustakawan@gmail.com',
+            'password' => Hash::make('password'),
+        ])->assigRole('pustakawan');
 
-        // DB::table('users')->insert([
-        //     'firstname' => 'Asep',
-        //     'lastname' => 'Ujang',
-        //     'npm' => '5520123457',
-        //     'email' => 'asep@gmail.com',
-        //     'password' => Hash::make('password')
-        // ]);
+        User::create([
+            'npm' => 002,
+            'username' => 'mahasiswasatu',
+            'first_name' => 'mahasiswa',
+            'last_name' => 'unsur',
+            'email' => 'mhs1@gmail.com',
+            'password' => Hash::make('password'),
+        ])->assigRole('mahasiswa');
     }
 }
