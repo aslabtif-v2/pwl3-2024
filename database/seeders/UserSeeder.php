@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'last_name' => 'unsur',
             'email' => 'pustakawan@gmail.com',
             'password' => Hash::make('password'),
-        ])->assigRole('pustakawan');
+        ])->assignRole('pustakawan');
 
         User::create([
             'npm' => 002,
@@ -34,6 +34,6 @@ class UserSeeder extends Seeder
             'last_name' => 'unsur',
             'email' => 'mhs1@gmail.com',
             'password' => Hash::make('password'),
-        ])->assigRole('mahasiswa');
+        ])->assignRole('mahasiswa');
     }
 }
