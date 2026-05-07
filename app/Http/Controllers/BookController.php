@@ -33,13 +33,13 @@ class BookController extends Controller
     
     public function store(Request $request){
         $validated = $request->validate([
-            'title' => 'required|max:255',
+            'title'  => 'required|max:255',
             'author' => 'required|max:150',
-            'year' => 'required|digits:4|integer|min:1900|max:'.(date('Y')),
+            'year'   => 'required|digits:4|integer|min:1900|max:'.(date('Y')),
             'publisher' => 'required|max:100',
-            'city' => 'required|max:75',
+            'city'   => 'required|max:75',
             'bookshelf_id' => 'required',
-            'cover' => 'nullable|image',
+            'cover'  => 'nullable|image',
         ]);
         if($request->hasFile('cover')){
             $path = $request->file('cover')->storeAs(
@@ -76,7 +76,11 @@ class BookController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //Buku -> Model Book
+        $data['books'] = Book::findOrFail($id);
+        //Bookshelf
+        $data['bookshelves'] = Bookshelf::pluck('name', 'id');
+        return view('books.edit', $data);
     }
 
     /**
@@ -84,7 +88,36 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required|max:150',
+            'year' => 'required|digits:4|integer|min:1900|max:'.(date('Y')),
+            'publisher' => 'required|max:100',
+            'city' => 'required|max:75',
+            'bookshelf_id' => 'required',
+            'cover' => 'nullable|image',
+        ]);
+        if($request->hasFile('cover')){
+            $path = $request->file('cover')->storeAs(
+            'cover_buku',
+            'cover_buku_'.time() . '.' . $request->file('cover')->extension(),
+            'public'
+            );
+            $validated['cover'] = basename($path);
+        }
+        Book::where('id', $id)->update($validated);
+
+        $notification = array(
+            'message' => "Data buku berhasil ditambahkan!",
+            'alert-type' => 'success'
+        );
+
+        if($request->save == true){
+            return redirect()->route('book')->with($notification);
+        }else{
+            return redirect()->route('book.create')->with($notification);
+        }
+
     }
 
     /**

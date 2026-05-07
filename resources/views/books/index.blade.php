@@ -22,6 +22,7 @@
                         <th>Kota</th>
                         <th>Cover</th>
                         <th>Kode Rak</th>
+                        <th>Aksi</th>
                     </tr>
                 </x-slot>
                 
@@ -43,6 +44,9 @@
                             @endif
                         </td>
                         <td>{{ $book->bookshelf->code }}-{{ $book->bookshelf->name }}</td>
+                        <td>
+                            <x-primary-button tag="a" href="{{ route('book.edit', $book->id) }}">Edit</x-primary-button>
+                        </td>
                     </tr>
                 @endforeach
             </x-table>
